@@ -1,0 +1,91 @@
+
+<br/><br/><br/><br/>
+<ng-container *ngIf="!IsEditMode">
+    <!--<ng-container *ngFor="let item of temp; let index = index">-->
+
+  <button *ngIf="assessmentOption==comboOptions[0] || assessmentOption==comboOptions[1]" 
+        style="font-size: 1.0em;position: relative;color:blue;"
+        (click)="onEditMode()"> <b> {{assessmentOption}} </b></button> 
+  <ratings-view *ngIf="assessmentOption==comboOptions[2]"
+          (onSelected)="onStarSelected($event)"
+          [(ngModel)]="assessmentRating"
+          [float]="true"
+          [readonly]="true"
+          [iconFontSize] = "0.5+confidenceRating*0.2 + 'em'"
+          [titles]="['Lack of Support', 'Likely', 'Very Likely', 'Almost Certain', 'Certain']">
+  </ratings-view>
+
+  <ratings-view *ngIf="assessmentOption==comboOptions[3]"
+          (onSelected)="onStarSelected($event)"
+          [(ngModel)]="assessmentRating"
+          [float]="true"
+          [readonly]="true"
+          [fullImage]="'./assets/images/circle-red_full.png'"
+          [emptyImage]="'./assets/images/circle-red_empty.png'"
+          [halfImage]="'./assets/images/circle-red_half.png'"
+          [iconFontSize] = "0.5+confidenceRating*0.2 + 'em'"
+          [titles]="['Lack of Support', 'Likely', 'Very Likely', 'Almost Certain', 'Certain']">
+  </ratings-view>
+  <!--<br/>-->
+
+  <!--</ng-container>-->
+</ng-container>
+
+<ng-container *ngIf="IsEditMode">
+
+  <select style="font-size: 1.0em;position: relative;"
+    [ngModel]="selectedComboOption" (ngModelChange)="onComboChange($event)" name="sel2">
+    <option [value]="i" *ngFor="let i of comboOptions">{{i}}</option>
+  </select>
+    
+    <!-- rating with half stars -->
+    <ratings-view *ngIf="selectedComboOption==comboOptions[2]"
+            (onHover)="onStarHover($event)" 
+            (onLeave)="onEndHover($event)" 
+            (onSelected)="onStarSelected($event)"
+            [(ngModel)]="agreeRating"
+            [float]="true"
+            [titles]="['Lack of Support', 'Likely', 'Very Likely', 'Almost Certain', 'Certain']">
+
+    </ratings-view>
+
+    <ratings-view *ngIf="selectedComboOption==comboOptions[3]"
+            (onHover)="onStarHover($event)" 
+            (onLeave)="onEndHover($event)" 
+            (onSelected)="onStarSelected($event)"
+            [(ngModel)]="disagreeRating"
+            [float]="true"
+            [fullImage]="'./assets/images/circle-red_full.png'"
+            [emptyImage]="'./assets/images/circle-red_empty.png'"
+            [halfImage]="'./assets/images/circle-red_half.png'"
+            [titles]="['Lack of Support', 'Likely', 'Very Likely', 'Almost Certain', 'Certain']">
+    </ratings-view>
+
+    <span *ngIf="selectedComboOption==comboOptions[2] || selectedComboOption==comboOptions[3]">
+        <!--<div style="border-left:2px solid #000;height:2.0em; display:inline-block"></div>-->
+        <b style="font-size: 1.2em; position:relative; text-align: center;"> Confidence: </b>
+        <ratings-view 
+                (onHover)="onStarHover($event)" 
+                (onLeave)="onEndHover($event)" 
+                (onSelected)="onStarSelected($event)"
+                [(ngModel)]="currentConfidenceRating"
+                [float]="true"
+                [fullImage]="'./assets/images/rectangle-yellow_full.png'"
+                [emptyImage]="'./assets/images/rectangle-yellow_empty.png'"
+                [halfImage]="'./assets/images/rectangle-yellow_half.png'"
+                [titles]="['Insignificant', 'Low', 'Medium', 'High', 'Very High']"
+                [IsCloserIcons]="true">
+        </ratings-view>
+        <!--<div style="border-left:2px solid #000;padding:2px;height:2.0em; display:inline-block"></div>-->
+    </span>
+    <!--<slider *ngIf="selectedComboOption==comboOptions[2] || selectedComboOption==comboOptions[3]"
+      (onSliderChanged)="onProbabilityChanged($event)"
+      [slideValue]="confidenceRating*0.25">
+      </slider>-->
+      <span style="width:0.3em; display:inline-block"> </span>
+    <button style="font-size: 1.0em;position: relative;" (click)="onSave()"> <b> Save </b></button>
+    <button style="font-size: 1.0em;position: relative;" (click)="onCancel()"> <b> Cancel </b></button>
+
+</ng-container>
+
+

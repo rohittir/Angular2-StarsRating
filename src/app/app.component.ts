@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { AssessmentComponent } from './Assessment.component'
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+
+  assm1:string = 'Agree';
+  assm2:number = 0.5;
+  assm3:number = 2.0;
+  constructor(){
+
+  }
+
 }

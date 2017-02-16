@@ -1,0 +1,39 @@
+
+
+<!--<div style="border: 0.2em solid black;width: 13.0em;height: 2.5em; display: inline-block;">-->
+   
+<span
+    (mouseleave)="resetHovered()"
+      class="rating"
+      [class.disabled]="disabled"
+      [class.readonly]="readonly"
+      tabindex="0"
+      role="slider" 
+      aria-valuemin="0"
+      [attr.aria-valuemax]="ratingRange.length" 
+      [attr.aria-valuenow]="model">
+    <span *ngFor="let item of ratingRange; let index = index"
+        [ngStyle]="{'font-size': iconFontSize}"
+        >
+        <img style="position: absolute; height:1.5em; width:1.5em;display: inline-block;vertical-align: text-top;"
+           (mouseenter)="setHovered(item)" 
+           (mousemove)="changeHovered($event)"
+           (click)="rate(item)"
+           src="{{getIcon(item)}}"
+           [title]="titles[index]">
+         <span *ngIf = "!IsCloserIcons" style="height:1.5em; width:1.5em;display: inline-block"> </span>
+         <span *ngIf = "IsCloserIcons" style="height:1.5em; width:1.15em;display: inline-block"> </span>
+    </span>
+    <ng-container *ngIf = "IsEditValueEnabled">
+    <input style="width:40px;font-size: 1.5em;position: relative; " #box (change)="onRatingChange(box.value)" value={{model*20}}>
+    <span style="font-size: 1.5em;position: relative; ">%</span>
+    </ng-container>
+</span>
+<span *ngIf="assessment"> 
+    <font size="5"> 
+        <span>Rating: {{model}} </span>
+        <p>Assessment: {{hoveringAssessment}}</p>
+   </font>
+</span>
+
+ <!--</div>-->
